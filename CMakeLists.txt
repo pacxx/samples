@@ -5,8 +5,8 @@ set(PACXX_DIR $ENV{PACXX_PATH})
 #set(CMAKE_MODULE_PATH ${PACXX_DIR}/lib/cmake/pacxx)
 set(CMAKE_CXX_STANDARD 14)
 
-set(GSTORM_DIR "" CACHE PATH "Path to gstom")
-set(RANGE_DIR "" CACHE PATH "Path to range-v3")
+set(GSTORM_DIR "${CMAKE_CURRENT_SOURCE_DIR}/gstorm/" CACHE PATH "Path to gstom")
+set(RANGE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/range-v3/" CACHE PATH "Path to range-v3")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall -Wno-invalid-noreturn")
 

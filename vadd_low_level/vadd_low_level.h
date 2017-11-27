@@ -5,14 +5,14 @@
 #pragma once
 
 #include <PACXX.h>
+#include <pacxx/detail/device/DeviceCode.h>
 using namespace pacxx::v2;
 
 static int test_vadd_low_level(int argc, char *argv[]) {
 
-#ifdef USE_EXPERIMENTAL_BACKEND
-  // craete the default executor
-  Executor::Create<NativeRuntime>(0);
-#endif
+//  Executor::Create<NativeRuntime>(0);
+
+//  Executor::Create<HIPRuntime>(0);
 
   auto &exec = Executor::get(0);
 

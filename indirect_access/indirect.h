@@ -66,7 +66,7 @@ static int test_indirect(int argc, char *argv[]) {
   auto pa = da.get();
   auto pb = db.get();
   auto pc = dc.get();
-  auto pi = di.get();
+  auto pi = a.data();
 
   auto vadd = [=](range &config) {
     kernel(config, pa, pc, pb, *pi);

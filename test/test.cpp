@@ -3,6 +3,7 @@
 //
 
 #include <gtest/gtest.h>
+#include <PACXX.h>
 
 #define RUN_PACXX_TEST(TestCat, TestName)        \
     TEST(TestCat, TestName){                     \
@@ -12,26 +13,34 @@
 // low level tests
 #include "../vadd_low_level/vadd_low_level.h"
 #include "../barrier/barrier.h"
+#include "../recurse/recurse.h"
+#include "../printf/printf.h"
 
 // msp tests
 #include "../msp_test/vadd_msp.h"
 
 // high level tests
-#include "../vadd/vadd.h"
-#include "../saxpy/saxpy.h"
-#include "../dot/dot.h"
-#include "../sum/sum.h"
+//#include "../vadd/vadd.h"
+//#include "../saxpy/saxpy.h"
+//#include "../dot/dot.h"
+//#include "../sum/sum.h"
 
 RUN_PACXX_TEST(BasicTests, vadd_low_level)
+RUN_PACXX_TEST(BasicTests, recurse)
+RUN_PACXX_TEST(BasicTests, printf)
 RUN_PACXX_TEST(BarrierTest, barrier);
 RUN_PACXX_TEST(MSPTests, vadd_msp)
 
-RUN_PACXX_TEST(RangesTests, vadd)
-RUN_PACXX_TEST(RangesTests, saxpy)
-RUN_PACXX_TEST(RangesTests, sum)
-RUN_PACXX_TEST(RangesTests, dot)
+//RUN_PACXX_TEST(RangesTests, vadd)
+//RUN_PACXX_TEST(RangesTests, saxpy)
+//RUN_PACXX_TEST(RangesTests, sum)
+//RUN_PACXX_TEST(RangesTests, dot)
 
 int main(int argc, char *argv[]) {
+
+  using namespace pacxx::v2; 
+  Executor::Create<NativeRuntime>(0);
+
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

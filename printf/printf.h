@@ -5,6 +5,7 @@
 #pragma once
 
 #include <PACXX.h>
+#include <pacxx/detail/device/DevicePrintf.h>
 using namespace pacxx::v2;
 
 static int test_printf(int argc, char *argv[]) {

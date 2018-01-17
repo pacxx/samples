@@ -3,6 +3,7 @@
 //
 
 #include <PACXX.h>
+#include <pacxx/detail/cuda/CUDAErrorDetection.h>
 #include <cuda_runtime_api.h>
 
 namespace pacxx {
@@ -84,9 +85,9 @@ using namespace pacxx::v2;
 int main() {
 
   int x = 5;
-  auto a = make_managed_ref<std::list<int, ManagedAllocator<int>>>(16);
-  auto b = make_managed_ref<std::list<int, ManagedAllocator<int>>>(16);
-  auto c = make_managed_ref<std::list<int, ManagedAllocator<int>>>(16);
+  auto a = make_managed_ref<std::vector<int, ManagedAllocator<int>>>(16);
+  auto b = make_managed_ref<std::vector<int, ManagedAllocator<int>>>(16);
+  auto c = make_managed_ref<std::vector<int, ManagedAllocator<int>>>(16);
 
   c.resize(16);
   std::fill(a.begin(), a.end(), 1);

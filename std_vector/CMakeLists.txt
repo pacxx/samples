@@ -13,6 +13,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+target_link_libraries(${PROJECT_NAME} PUBLIC cudart)
 
 add_pacxx_to_target(${PROJECT_NAME} ${CMAKE_CURRENT_BINARY_DIR} ${SOURCE_FILES})
 

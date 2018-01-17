@@ -1,6 +1,6 @@
 [submodule "gstorm"]
 	path = gstorm
-	url = git@bitbucket.org:mhaidl/gstorm.git
+	url = ../gstorm.git
 [submodule "range-v3"]
 	path = range-v3
-	url = git@bitbucket.org:mhaidl/range-v3.git
+	url = ../range-v3.git

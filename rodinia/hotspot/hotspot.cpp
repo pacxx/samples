@@ -300,11 +300,6 @@ int main(int argc, char **argv) {
 
   printf("WG size of kernel = %d X %d\n", BLOCK_SIZE, BLOCK_SIZE);
 
-#ifdef USE_EXPERIMENTAL_BACKEND
-  // craete the default executor
-  Executor::Create<NativeRuntime>(0);
-#endif
-
   auto &exec = Executor::get(0);
 
   int size;

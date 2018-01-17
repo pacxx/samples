@@ -90,25 +90,17 @@ reduce(pacxx::v2::range &handle, const T *__restrict__ g_idata, T *__restrict__ 
 
   // NB2: This section would also need __sync calls if warp
   // synchronous execution were not assumed
-  if (blockSize >= 64 && tid < 32)
-    sdata[tid] += sdata[tid + 32];
-  handle.synchronize();
-  if (blockSize >= 32 && tid < 32)
-    sdata[tid] += sdata[tid + 16];
-  handle.synchronize();
-  if (blockSize >= 16 && tid < 32)
-    sdata[tid] += sdata[tid + 8];
-  handle.synchronize();
-  if (blockSize >= 8 && tid < 32)
-    sdata[tid] += sdata[tid + 4];
-  handle.synchronize();
-  if (blockSize >= 4 && tid < 32)
-    sdata[tid] += sdata[tid + 2];
-  handle.synchronize();
-  if (blockSize >= 2 && tid < 32)
-    sdata[tid] += sdata[tid + 1];
-  handle.synchronize();
-
+    if (tid < 32)
+    {
+        // NB2: This section would also need __sync calls if warp
+        // synchronous execution were not assumed
+        if (blockSize >= 64) sdata[tid] += sdata[tid + 32];
+        if (blockSize >= 32) sdata[tid] += sdata[tid + 16];
+        if (blockSize >= 16) sdata[tid] += sdata[tid + 8];
+        if (blockSize >= 8)  sdata[tid] += sdata[tid + 4];
+        if (blockSize >= 4)  sdata[tid] += sdata[tid + 2];
+        if (blockSize >= 2)  sdata[tid] += sdata[tid + 1];
+    }
 
   // Write result for this block to global memory
   if (tid == 0) {

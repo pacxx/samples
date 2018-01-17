@@ -50,12 +50,6 @@ void RunBenchmark(ResultDatabase &resultDB, OptionParser &op);
 //
 // ****************************************************************************
 int main(int argc, char *argv[]) {
-#ifdef USE_EXPERIMENTAL_BACKEND
-  // craete the default executor
-  pacxx::v2::Executor::Create<pacxx::v2::NativeRuntime>(0);
-#else
-  pacxx::v2::Executor::Create<pacxx::v2::CUDARuntime>(0);
-#endif
   int ret = 0;
   bool noprompt = false;
 

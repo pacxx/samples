@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
 
 #ifdef USE_EXPERIMENTAL_BACKEND
   // craete the default executor
-  Executor::Create<NativeRuntime>(0);
+  Executor::Create<HIPRuntime>(0);
   runs = 1;
 #endif
 

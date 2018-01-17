@@ -6,7 +6,6 @@
 
 #include <gstorm.h>
 #include <range/v3/all.hpp>
-#include <thrust/random.h>
 
 #define COMPARE_SEQUENTIAL
 

@@ -55,11 +55,7 @@ bool compareMatrices(const std::vector<int> &first, const std::vector<int> &seco
 }
 
 void calcPACXX(int* a, int* b, int* c) {
-#ifdef USE_EXPERIMENTAL_BACKEND
-  // craete the default executor
-  Executor::Create<NativeRuntime>(0);
-#endif
-
+  Executor::Create<HIPRuntime>(0);
   auto& exec = Executor::get(0);
 
   auto& dev_a = exec.allocate<int>(matrix_size, a);

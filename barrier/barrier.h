@@ -23,10 +23,7 @@ void kernel(CFG &handle, const T *__restrict__ in, T *__restrict__ out,
 
 static int test_barrier(int argc, char *argv[]) {
 
-#ifdef USE_EXPERIMENTAL_BACKEND
-  // craete the default executor
-  Executor::Create<NativeRuntime>(0);
-#endif
+  Executor::Create<HIPRuntime>(0);
 
   auto &exec = Executor::get(0);
 
@@ -50,7 +47,9 @@ static int test_barrier(int argc, char *argv[]) {
 
   exec.launch(vadd, {{size}, {size}});
   db.download(b.data(), b.size());
-
+  for (auto v : b)
+    std::cout << v << " "; 
+  std::cout << std::endl;
   if (std::equal(a.begin(), a.end(), b.begin()))
     return 0;
 

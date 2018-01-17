@@ -232,7 +232,7 @@ void kernel_gpu_opencl_wrapper(par_str par_cpu,
   auto p_fv_gpu = d_fv_gpu.get();
 
   time3 = get_time();
-
+  for (int i = 0; i < 1000; ++i)
   exec.launch([=](auto &handle) {
     kernel(handle, par_cpu, dim_cpu,
            p_box_gpu,

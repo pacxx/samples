@@ -448,6 +448,7 @@ void compute_flux(EXEC &exec, int nelr, T1 &elements_surrounding_elements, T2 &n
   auto d7 = ff_flux_contribution_momentum_x.get();
   auto d8 = ff_flux_contribution_momentum_y.get();
   auto d9 = ff_flux_contribution_momentum_z.get();
+  for (int i = 0; i < 1000; ++i)
   exec.launch([=](auto &cfg) {
     compute_flux(d1, d2, d3, d4, d5, d6, d7, d8, d9, nelr, cfg);
   }, {{work_items / work_group_size}, {work_group_size}});
@@ -463,7 +464,6 @@ void time_step(EXEC &exec, int j, int nelr, T &old_variables, T &variables, T &s
   auto d2 = variables.get();
   auto d3 = step_factors.get();
   auto d4 = fluxes.get();
-
   exec.launch([=](auto &cfg) {
     time_step(j, nelr, d1, d2, d3, d4, cfg);
   }, {{work_items / work_group_size}, {work_group_size}});

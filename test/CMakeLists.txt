@@ -19,6 +19,9 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 add_pacxx_to_target(${PROJECT_NAME} ${CMAKE_CURRENT_BINARY_DIR} ${SOURCE_FILES})
 
-target_link_libraries(${PROJECT_NAME} PUBLIC ${GTEST_LIBRARIES})
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
+target_link_libraries(${PROJECT_NAME} PUBLIC ${GTEST_LIBRARIES} PUBLIC Threads::Threads)
 
 add_test(AllTests ${PROJECT_NAME})

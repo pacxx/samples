@@ -9,11 +9,6 @@
 using namespace pacxx::v2;
 
 static int test_vadd_low_level(int argc, char *argv[]) {
-
-//  Executor::Create<NativeRuntime>(0);
-
-//  Executor::Create<HIPRuntime>(0);
-
   auto &exec = Executor::get(0);
 
   size_t size = 128;

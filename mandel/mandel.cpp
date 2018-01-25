@@ -60,12 +60,6 @@ int main(int argc, char *argv[]) {
   if (argc >= 4)
     runs = std::stoi(argv[3]);
 
-#ifdef USE_EXPERIMENTAL_BACKEND
-  // craete the default executor
-  Executor::Create<HIPRuntime>(0);
-  runs = 1;
-#endif
-
   std::vector<pixel> data(width * height);
   auto gout = data | gpu::copy;
 

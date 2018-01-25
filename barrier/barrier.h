@@ -22,9 +22,6 @@ void kernel(CFG &handle, const T *__restrict__ in, T *__restrict__ out,
 }
 
 static int test_barrier(int argc, char *argv[]) {
-
-  Executor::Create<HIPRuntime>(0);
-
   auto &exec = Executor::get(0);
 
   size_t size = 16;

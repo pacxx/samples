@@ -55,12 +55,15 @@ bool compareMatrices(const std::vector<int> &first, const std::vector<int> &seco
 }
 
 void calcPACXX(int* a, int* b, int* c) {
-  Executor::Create<HIPRuntime>(0);
   auto& exec = Executor::get(0);
 
-  auto& dev_a = exec.allocate<int>(matrix_size, a);
-  auto& dev_b = exec.allocate<int>(matrix_size, b);
-  auto& dev_c = exec.allocate<int>(matrix_size, c);
+  auto& dev_a = exec.allocate<int>(matrix_size);
+  auto& dev_b = exec.allocate<int>(matrix_size);
+  auto& dev_c = exec.allocate<int>(matrix_size);
+
+  dev_a.upload(a, matrix_size); 
+  dev_b.upload(b, matrix_size); 
+  dev_c.upload(c, matrix_size); 
 
   auto pa = dev_a.get();
   auto pb = dev_b.get();

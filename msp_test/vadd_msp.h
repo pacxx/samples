@@ -8,12 +8,6 @@
 using namespace pacxx::v2;
 
 static int test_vadd_msp(int argc, char *argv[]) {
-
-#ifdef USE_EXPERIMENTAL_BACKEND
-  // craete the default executor
-  Executor::Create<NativeRuntime>(0);
-#endif
-
   auto &exec = Executor::get(0);
 
   size_t size = 128;
@@ -23,9 +17,13 @@ static int test_vadd_msp(int argc, char *argv[]) {
   std::vector<int> c(size, 0);
   std::vector<int> gold(size, 0);
 
-  auto &da = exec.allocate<int>(a.size(), a.data());
-  auto &db = exec.allocate<int>(b.size(), b.data());
-  auto &dc = exec.allocate<int>(c.size(), c.data());
+  auto &da = exec.allocate<int>(a.size());
+  auto &db = exec.allocate<int>(b.size());
+  auto &dc = exec.allocate<int>(c.size());
+
+  da.upload(a.data(), a.size());
+  db.upload(b.data(), b.size());
+  dc.upload(c.data(), c.size());
 
   int *pa = da.get();
   int *pb = db.get();

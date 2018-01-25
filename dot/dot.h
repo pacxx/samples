@@ -23,11 +23,6 @@ static int test_dot(int argc, char *argv[]) {
   if (argc >= 3)
     runs = std::stoi(argv[2]);
 
-#ifdef USE_EXPERIMENTAL_BACKEND
-  // craete the default executor
-  Executor::Create<NativeRuntime>(0);
-#endif
-
   std::vector<int> xs = view::iota(0) | view::take(vsize);
   std::vector<int> ys = view::repeat(1) | view::take(vsize);
 

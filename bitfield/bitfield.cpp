@@ -70,22 +70,28 @@ int main() {
   std::vector<pixel_bit> b(size), b2(size);
   std::vector<pixel_vec> c(size), c2(size);
 
-  auto &da = exec.allocate<pixel_char>(a.size(), a.data());
+  auto &da = exec.allocate<pixel_char>(a.size());
+  da.upload(a.data(), a.size());
   auto pa = da.get();
 
-  auto &da2 = exec.allocate<pixel_char>(a2.size(), a2.data());
+  auto &da2 = exec.allocate<pixel_char>(a2.size());
+  da2.upload(a2.data(), a2.size());
   auto pa2 = da2.get();
 
-  auto &db = exec.allocate<pixel_bit>(b.size(), b.data());
+  auto &db = exec.allocate<pixel_bit>(b.size());
+  db.upload(b.data(), b.size());
   auto pb = db.get();
 
-  auto &db2 = exec.allocate<pixel_bit>(b2.size(), b2.data());
+  auto &db2 = exec.allocate<pixel_bit>(b2.size());
+  db2.upload(b2.data(), b2.size());
   auto pb2 = db2.get();
 
-  auto &dc = exec.allocate<pixel_vec>(c.size(), c.data());
+  auto &dc = exec.allocate<pixel_vec>(c.size());
+  dc.upload(c.data(), c.size());
   auto pc = dc.get();
 
-  auto &dc2 = exec.allocate<pixel_vec>(c2.size(), c2.data());
+  auto &dc2 = exec.allocate<pixel_vec>(c2.size());
+  dc2.upload(c2.data(), c2.size());
   auto pc2 = dc2.get();
 
   auto vadd_char = [=](range &config) {

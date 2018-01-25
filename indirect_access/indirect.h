@@ -28,12 +28,6 @@ void kernel(CFG &handle, const T * in, const T* in2,  T* out, IDX idx_map) {
 }
 
 static int test_indirect(int argc, char *argv[]) {
-
-#ifdef USE_EXPERIMENTAL_BACKEND
-  // craete the default executor
-  Executor::Create<NativeRuntime>(0);
-#endif
-
   auto &exec = Executor::get(0);
 
   size_t size = 16;
@@ -66,7 +60,7 @@ static int test_indirect(int argc, char *argv[]) {
   auto pa = da.get();
   auto pb = db.get();
   auto pc = dc.get();
-  auto pi = a.data();
+  auto pi = di.get();
 
   auto vadd = [=](range &config) {
     kernel(config, pa, pc, pb, *pi);

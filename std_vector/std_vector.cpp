@@ -37,7 +37,7 @@ private:
   T *_ptr;
 };
 template<typename T, typename... Ts> auto make_managed_ref(Ts &&... args) {
-  auto &pvc = Executor::get(0).template allocate<T>(1, nullptr, MemAllocMode::Unified);
+  auto &pvc = Executor::get(0).template allocate<T>(1, MemAllocMode::Unified);
   auto *ptr = pvc.get();
   new(ptr) T(std::forward<Ts>(args)...);
   return reference_wrapper<T>(*ptr);
@@ -54,7 +54,7 @@ template<typename T> struct ManagedAllocator {
     std::cout << "allocate " << n << " bytes\n";
     if (n <= std::numeric_limits<std::size_t>::max() / sizeof(T)) {
       T *ptr = nullptr;
-      auto &dp = Executor::get(0).template allocate<T>(n, nullptr, MemAllocMode::Unified);
+      auto &dp = Executor::get(0).template allocate<T>(n, MemAllocMode::Unified);
       ptr = dp.get();
       if (ptr) {
         return ptr;

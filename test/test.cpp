@@ -15,6 +15,7 @@
 #include "../barrier/barrier.h"
 #include "../recurse/recurse.h"
 #include "../printf/printf.h"
+#include "../external_sm/external_sm.h"
 
 // msp tests
 #include "../msp_test/vadd_msp.h"
@@ -28,6 +29,7 @@
 RUN_PACXX_TEST(BasicTests, vadd_low_level)
 RUN_PACXX_TEST(BasicTests, recurse)
 RUN_PACXX_TEST(BasicTests, printf)
+RUN_PACXX_TEST(BasicTests, external_sm)
 RUN_PACXX_TEST(BarrierTest, barrier);
 RUN_PACXX_TEST(MSPTests, vadd_msp)
 
@@ -37,10 +39,6 @@ RUN_PACXX_TEST(MSPTests, vadd_msp)
 //RUN_PACXX_TEST(RangesTests, dot)
 
 int main(int argc, char *argv[]) {
-
-  using namespace pacxx::v2; 
-  Executor::Create<NativeRuntime>(0);
-
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

@@ -66,11 +66,6 @@ int main(int argc, char *argv[]) {
   if (argc >= 3)
     runs = std::stoi(argv[2]);
 
-#ifdef USE_EXPERIMENTAL_BACKEND
-  // craete the default executor
-  Executor::Create<NativeRuntime>(0);
-#endif
-
   auto estimate = 0.0f;
   for (int i = 0; i < runs; ++i)
     estimate = gpu::algorithm::reduce(

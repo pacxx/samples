@@ -7,20 +7,6 @@
 #include <PACXX.h>
 using namespace pacxx::v2;
 
-template<typename CFG, typename T>
-void kernel(CFG &handle, const T *__restrict__ in, T *__restrict__ out,
-            const unsigned int n) {
-  [[pacxx::shared]] int sm[16];
-  auto i = handle.get_local(0);
-  auto g = handle.get_global(0);
-  sm[i] = in[g];
-
-  handle.synchronize();
-
-  out[g] = sm[i];
-
-}
-
 static int test_barrier(int argc, char *argv[]) {
   auto &exec = Executor::get(0);
 
@@ -38,15 +24,19 @@ static int test_barrier(int argc, char *argv[]) {
   auto pa = da.get();
   auto pb = db.get();
 
-  auto vadd = [=](range &config) {
-    kernel(config, pa, pb, size);
+  auto vadd = [=](range &handle) {
+   [[pacxx::shared]] int sm[16];
+  auto i = handle.get_local(0);
+  auto g = handle.get_global(0);
+  sm[i] = pa[g];
+
+  handle.synchronize();
+
+  pb[g] = sm[i];
   };
 
   exec.launch(vadd, {{size}, {size}});
   db.download(b.data(), b.size());
-  for (auto v : b)
-    std::cout << v << " "; 
-  std::cout << std::endl;
   if (std::equal(a.begin(), a.end(), b.begin()))
     return 0;
 

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(hotspot)
+project(external_sm)
 
 set(CMAKE_CXX_STANDARD 14)
 

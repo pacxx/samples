@@ -7,10 +7,10 @@
 #include <PACXX.h>
 using namespace pacxx::v2;
 
-static int test_barrier(int argc, char *argv[]) {
+static int test_external_sm(int argc, char *argv[]) {
   auto &exec = Executor::get(0);
 
-  size_t size = 16;
+  size_t size = 256;
 
   std::vector<int> a(size * size);
   std::iota(a.begin(), a.end(), 0);
@@ -25,7 +25,7 @@ static int test_barrier(int argc, char *argv[]) {
   auto pb = db.get();
 
   auto vadd = [=](range &handle) {
-  PACXX_SHARED int sm[16];
+  [[pacxx::shared]] extern int sm[];
   auto i = handle.get_local(0);
   auto g = handle.get_global(0);
   sm[i] = pa[g];
@@ -35,7 +35,7 @@ static int test_barrier(int argc, char *argv[]) {
   pb[g] = sm[i];
   };
 
-  exec.launch(vadd, {{size}, {size}});
+  exec.launch(vadd, {{size}, {size}, size * sizeof(int)});
   db.download(b.data(), b.size());
   if (std::equal(a.begin(), a.end(), b.begin()))
     return 0;

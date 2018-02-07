@@ -16,6 +16,7 @@
 #include "../recurse/recurse.h"
 #include "../printf/printf.h"
 #include "../external_sm/external_sm.h"
+#include "../async_launch/async_launch.h"
 
 // msp tests
 #include "../msp_test/vadd_msp.h"
@@ -30,7 +31,8 @@ RUN_PACXX_TEST(BasicTests, vadd_low_level)
 RUN_PACXX_TEST(BasicTests, recurse)
 RUN_PACXX_TEST(BasicTests, printf)
 RUN_PACXX_TEST(BasicTests, external_sm)
-RUN_PACXX_TEST(BarrierTest, barrier);
+RUN_PACXX_TEST(BasicTest, barrier)
+RUN_PACXX_TEST(BasicText, async_launch)
 RUN_PACXX_TEST(MSPTests, vadd_msp)
 
 //RUN_PACXX_TEST(RangesTests, vadd)

@@ -30,11 +30,11 @@ public:
   operator T &() const noexcept { return *_ptr; }
   T &get() const noexcept { return *_ptr; }
 
-  auto begin() { return _ptr->begin(); }
-  auto end() { return _ptr->end(); }
+  auto begin() const { return _ptr->begin(); }
+  auto end() const { return _ptr->end(); }
   auto resize(size_t size) { _ptr->resize(size); }
-  size_t size() { return _ptr->size(); }
-  auto &operator[](size_t idx) { return _ptr->operator[](idx); }
+  size_t size() const { return _ptr->size(); }
+  auto &operator[](size_t idx) const { return _ptr->operator[](idx); }
 
 private:
   std::shared_ptr<T> _ptr;
@@ -42,11 +42,10 @@ private:
 
 template <typename T> struct managed_allocator {
   using value_type = T;
-
+  
   managed_allocator(Executor &exec) : _exec(exec) {}
 
-  template <class U> managed_allocator(const managed_allocator<U>& other) {
-    _exec = other._exec; 
+  template <class U> managed_allocator(const managed_allocator<U>& other) : _exec(other.get_executor()) {
   }
 
   T *allocate(std::size_t n) {
@@ -60,6 +59,8 @@ template <typename T> struct managed_allocator {
   }
 
   void deallocate(T *ptr, std::size_t n) { _exec.template free<T>(ptr); }
+
+  Executor& get_executor() const { return _exec; }
 
 private:
   Executor &_exec;
@@ -107,7 +108,7 @@ int main() {
   std::fill(b.begin(), b.end(), 2);
   std::fill(c.begin(), c.end(), -1);
 
-  auto saxpy = [=](auto &handle) mutable {
+  auto saxpy = [=](auto &handle) {
     auto idx = handle.get_global(0);
     if (idx >= c.size())
       return;

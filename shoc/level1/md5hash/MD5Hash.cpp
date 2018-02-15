@@ -464,7 +464,7 @@ double FindKeyWithDigest_GPU(const unsigned int searchDigest[4],
   db_foundKey.upload(foundKey, 8);
   db_foundDigest.upload(foundDigest, 4);
 
-  auto &event = exec.createEvent();
+  auto event = exec.createEvent();
 
   //
   // calculate work thread shape
@@ -475,7 +475,7 @@ double FindKeyWithDigest_GPU(const unsigned int searchDigest[4],
   //
   // run the kernel
   //
-  event.start();
+  event->start();
 
   auto s0 = searchDigest[0];
   auto s1 = searchDigest[1];
@@ -494,12 +494,12 @@ double FindKeyWithDigest_GPU(const unsigned int searchDigest[4],
                              d_foundKey,
                              d_foundDigest);
   }, {{nblocks}, {nthreads}});
-  event.stop();
+  event->stop();
 
   //
   // get the timing/rate info
   //
-  float millisec = event.result();
+  float millisec = event->result();
 
   //
   // read the (presumably) found key

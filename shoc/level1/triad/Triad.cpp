@@ -144,9 +144,9 @@ void RunBenchmark(ResultDatabase &resultDB, OptionParser &op) {
       int crtIdx = 0;
       size_t globalWorkSize = elemsInBlock / blockSize;
 
-      auto &event = exec.createEvent();
+      auto event = exec.createEvent();
 
-      event.start();
+      event->start();
       // TODO: we need streams
       memA0.upload(h_mem.data(), blockSizes[i] * 1024 / sizeof(float));
       memB0.upload(h_mem.data(), blockSizes[i] * 1024 / sizeof(float));
@@ -201,8 +201,8 @@ void RunBenchmark(ResultDatabase &resultDB, OptionParser &op) {
       }
 
       exec.synchronize();
-      event.stop();
-      double time = event.result();
+      event->stop();
+      double time = event->result();
 
       double triad = ((double) numMaxFloats * 2.0) / (time * 1e9);
       resultDB.AddResult("TriadFlops", sizeStr, "GFLOP/s", triad);

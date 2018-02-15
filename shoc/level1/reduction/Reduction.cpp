@@ -165,17 +165,17 @@ void RunTest(string testName, ResultDatabase &resultDB, OptionParser &op) {
   cout << "Running benchmark." << endl;
   for (int k = 0; k < passes; k++) {
     // Copy data to GPU
-    auto &event = exec.createEvent();
-    event.start();
+    auto event = exec.createEvent();
+    event->start();
     d_idata.upload(h_idata.data(), h_idata.size());
     exec.synchronize();
-    event.stop();
+    event->stop();
 
     // Get elapsed time
-    float transfer_time = event.result();
+    float transfer_time = event->result();
 
     // Execute kernel
-    event.start();
+    event->start();
 
     auto pd_idata = d_idata.get();
     auto pd_odata = d_odata.get();
@@ -186,18 +186,18 @@ void RunTest(string testName, ResultDatabase &resultDB, OptionParser &op) {
       }, {{static_cast<size_t>(num_blocks)}, {static_cast<size_t>(num_threads)}, static_cast<unsigned int>(smem_size)});
     }
     exec.synchronize();
-    event.stop();
+    event->stop();
 
     // Get kernel time
-    float totalReduceTime = event.result();
+    float totalReduceTime = event->result();
     double avg_time = totalReduceTime / (double) iters;
 
     // Copy back to host
-    event.start();
+    event->start();
     d_odata.download(h_odata.data(), h_odata.size());
     exec.synchronize();
-    event.stop();
-    float output_time = event.result();
+    event->stop();
+    float output_time = event->result();
     transfer_time += output_time;
 
     T dev_result = 0;

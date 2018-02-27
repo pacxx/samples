@@ -80,6 +80,7 @@
 using namespace pacxx::v2;
 namespace{
 #define NAO_SAMPLES		8
+#define M_PI 3.1415926535f
 /* random number generator, taken from the ospray project, http://www.ospray.org 
    Special thanks to Johannes Guenther who originally added this neat
    rng to ospray!
@@ -122,7 +123,7 @@ float rng_getInt(struct RNGState *rng)
   int k = rng->seed / q;
   rng->seed = a*(rng->seed - k*q) - r*k;
   rng->seed = rng->seed & 0x7FFFFFFF;
-  int j = fmin(rng->state / f, TABLE_SIZE-1);
+  int j = fminf(rng->state / f, TABLE_SIZE-1);
   rng->state = rng->table[j];
   rng->table[j] = rng->seed;
   return rng->state;
